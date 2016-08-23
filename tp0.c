@@ -65,7 +65,7 @@ int comparar(int vector1[], int n1, int vector2[], int n2) {
  */
 
  
-void seleccion(int vector[], int n) {
+/*void seleccion(int vector[], int n) {
 	int i,j;
 	
 	for (i=0; i < n-1; i++) {
@@ -74,5 +74,20 @@ void seleccion(int vector[], int n) {
 				swap(&vector[i],&vector[j]);
 			}
 		}
+	}
+}
+*/
+void seleccion(int vector[], int n) {
+	int i,posMax,posUltimo;
+	
+	for (i=0; i < n; i++) {
+		posMax= maximo(vector, n-i );		
+		posUltimo= n-1;
+		/* n-1 para que no acceda a espacio de memoria
+		 * que no pertenezca al vector
+		 */
+		swap(&vector[posMax],&vector[posUltimo-i]);
+			
+		
 	}
 }
