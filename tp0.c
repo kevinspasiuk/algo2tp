@@ -1,5 +1,4 @@
 #include "tp0.h"
-#include <stdio.h>
 
 /* ******************************************************************
  *                     FUNCIONES A COMPLETAR
@@ -9,7 +8,7 @@
  */
 void swap (int* x, int* y) {
 	int z;
-    z = *x;
+   	 z = *x;
 	*x = *y;
 	*y = z;
 }
@@ -50,9 +49,11 @@ int comparar(int vector1[], int n1, int vector2[], int n2) {
 		i++;
 	}
 	if (i == n1 && i ==n2){
+	/*Caso en el que los vectores son iguales.*/		
 		return 0;
 	}
 	else if (i==n1){
+	/*Caso en el que el primer inexistente está en el 		  	primero.*/		
 		return -1;
 	}
 	else{
@@ -65,18 +66,6 @@ int comparar(int vector1[], int n1, int vector2[], int n2) {
  */
 
  
-/*void seleccion(int vector[], int n) {
-	int i,j;
-	
-	for (i=0; i < n-1; i++) {
-		for (j=i+1; j < n; j++){
-			if (vector[i] > vector[j]){
-				swap(&vector[i],&vector[j]);
-			}
-		}
-	}
-}
-*/
 void seleccion(int vector[], int n) {
 	int i,posMax,posUltimo;
 	
@@ -84,7 +73,7 @@ void seleccion(int vector[], int n) {
 		posMax= maximo(vector, n-i );		
 		posUltimo= n-1;
 		/* n-1 para que no acceda a espacio de memoria
-		 * que no pertenezca al vector
+		 * que no pertenece al vector
 		 */
 		swap(&vector[posMax],&vector[posUltimo-i]);
 			
