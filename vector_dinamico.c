@@ -1,69 +1,45 @@
 #include "vector_dinamico.h"
 
+/*******************************************************************
+					 VD - 99849 - SPASIUK KEVIN
+					 CORRECTOR: GONZALO MARINO
+
+*******************************************************************/
 
 // Funciones del alumno.
-
-/* CONSULTAS:
-POS NEGATIVA?, en pruebas no 
-puntero en obtener
-correcto de en_rango
-*/
-
-bool checkeo_rango(vector_t* vector, size_t pos){
-	
-	size_t tam;
-	tam= vector_obtener_tamanio(vector);
-	if (pos<tam){
-		return true;
-	}
-	else 
-		return false;
-
-}
-
-
 void vector_destruir(vector_t* vector){
-	free(vector->datos);
-	free(vector);
-	vector=NULL;
 	
+	if (vector != NULL){
+		free(vector->datos);
+		free(vector);
+	}
 }
 
 bool vector_obtener(vector_t* vector, size_t pos, int* valor){
-	
-	bool en_rango;
-	en_rango = checkeo_rango(vector,pos);
-	if (en_rango==true){
-		*valor= vector->datos[pos];
-		return true;
-	}	
-	else{
+
+	if ( pos > vector_obtener_tamanio(vector) ){
 		return false;
-	}
+	}	
+	*valor= vector->datos[pos];
+	return true;
 	
 	
 }
 
 bool vector_guardar(vector_t* vector, size_t pos, int valor){
 	
-	bool en_rango;
-	en_rango= checkeo_rango(vector,pos);
-	if (en_rango==true){
-		vector->datos[pos]=valor;
-		return true;
-	}
-	else{
+
+	if ( pos > vector_obtener_tamanio(vector) ){
 		return false;
 	}
-
+	vector->datos[pos]=valor;
+	return true;
 }
 
 
 size_t vector_obtener_tamanio(vector_t* vector){
 	
-	size_t tamanio;
-	tamanio= vector->tam;
-	return tamanio;	
+	return vector->tam;	
 
 }
 
