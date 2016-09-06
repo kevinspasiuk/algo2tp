@@ -17,7 +17,7 @@ void vector_destruir(vector_t* vector){
 
 bool vector_obtener(vector_t* vector, size_t pos, int* valor){
 
-	if ( pos > vector_obtener_tamanio(vector) ){
+	if ( pos >= vector_obtener_tamanio(vector) ){
 		return false;
 	}	
 	*valor= vector->datos[pos];
@@ -29,7 +29,7 @@ bool vector_obtener(vector_t* vector, size_t pos, int* valor){
 bool vector_guardar(vector_t* vector, size_t pos, int valor){
 	
 
-	if ( pos > vector_obtener_tamanio(vector) ){
+	if ( pos >= vector_obtener_tamanio(vector) ){
 		return false;
 	}
 	vector->datos[pos]=valor;
