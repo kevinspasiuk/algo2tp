@@ -1,7 +1,10 @@
 #include "pila.h"
 #include <stdlib.h>
 #include <stdio.h>
-
+#define TAM_INICIAL 10
+#define TAM_MINIMO 5
+#define TAM_DOBLE 2*(pila->capacidad)
+#define TAM_MITAD (pila->capacidad/2)
 /* Definición del struct pila proporcionado por la cátedra.
  */
 struct pila {
@@ -33,8 +36,8 @@ pila_t* pila_crear(void){
     if (pila == NULL) {
         return NULL;
     }
-    pila->datos = malloc(10 * sizeof(void*));   
-    pila->capacidad = 10;
+    pila->datos = malloc(TAM_INICIAL * sizeof(void*));   
+    pila->capacidad = TAM_INICIAL;
     pila->cantidad= 0;
     return pila;
     
@@ -67,7 +70,7 @@ void* pila_ver_tope(const pila_t *pila){
 bool pila_apilar(pila_t *pila, void* valor){
 	/* si falta espacio*/
 	if ( pila->capacidad == pila->cantidad ){ 
-			if( pila_redimensionar(pila, 2*(pila->capacidad)) == false){
+			if( pila_redimensionar(pila, TAM_DOBLE) == false){
 					return false;
 			}
 	}
@@ -85,11 +88,9 @@ void* pila_desapilar(pila_t *pila){
 	void* ultimo = pila->datos[(pila->cantidad)-1];
 	pila->cantidad--; 	
 	/* si sobra espacio*/
-	if ( pila->cantidad == (pila->capacidad)/4 && pila->capacidad>5 ){ 
-		pila_redimensionar(pila,(pila->capacidad/2));
+	if ( pila->cantidad == (pila->capacidad)/4 && pila->capacidad>TAM_MINIMO ){ 
+		pila_redimensionar(pila, TAM_MITAD);
 	}
 	return ultimo;
 	
 }
-
-
