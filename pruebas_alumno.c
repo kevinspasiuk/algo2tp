@@ -1,7 +1,8 @@
-#include "pila.h"
+#include "cola.h"
 #include "testing.h"
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 
 
@@ -10,126 +11,131 @@
  * *****************************************************************/
 
 
-// pila sin elementos
-void prueba_pila_nulo(){
-	
-	//variable
-	pila_t* p= pila_crear();
-	
-	//prueba con pila vacia
-	printf("\nPRUEBA CON PILA VACIA \n");
-	print_test("Pila vacia", pila_esta_vacia(p) == true); 
-	print_test("Tope Null",pila_ver_tope(p) == NULL);	
-	print_test("desapilo", pila_desapilar(p) == NULL);
-	
-	//Destruyo la pila
-	pila_destruir(p);	
-	print_test("pila destruida", true);
-
-}
-
-void pruebas_algunos_elementos() {
-	pila_t* p = pila_crear();
-		
-	//apilo algunos elementos
-	int a=1,b=2,c=3;
-    printf("\nPRUEBA CON ALGUNOS ELEMENTOS \n");
-	print_test("apilar 1er valor", pila_apilar(p,&a) != false);
-	print_test("apilar 2do valor", pila_apilar(p,&b) != false);
-	print_test("apilar 3er valor", pila_apilar(p,&c) != false);
-
-	//control si esta vacia 
-	print_test("No esta vacia", pila_esta_vacia(p) == false);
-    
-    //control tope
-	print_test("tope = 3", pila_ver_tope(p) == &c); 
-	
-	//desapilo y consulto tope
-	print_test("Desapilo por 1era vez", pila_desapilar(p) == &c);
-	print_test("tope = 2", pila_ver_tope(p) == &b);
-	print_test("Desapilo por 2da vez", pila_desapilar(p) == &b);
-	print_test("tope = 1", pila_ver_tope(p) == &a);	
-	print_test("Desapilo por 3ra vez", pila_desapilar(p) == &a);
-	print_test("tope = NULL", pila_ver_tope(p) == NULL);
-	
-	//control si esta vacia
-	print_test("Esta vacia", pila_esta_vacia(p) == true);
-		
-	//Destruyo la pila
-	pila_destruir(p);	
-	print_test("pila destruida", true);
-	
-}
-
-void pruebas_muchos_elementos() {
-	
-	printf("\nPRUEBA CON MUCHOS ELEMENTOS \n");
+void prueba_un_elemento(){
+	printf("~~~ PRUEBA 1 ELEMENTO ~~~\n");
 	//variables
-	pila_t* p = pila_crear();
-	int a=1,b=3,i;
-	pila_apilar(p, &b);
+	int a=1;
+	cola_t* cola = cola_crear();
 	
-	// cargo muchos elementos. 
-	for (i=1; i<990; i++){
-		pila_apilar(p, &a);
-	}
-	printf("Se apilaron %d elementos \n",i);
-	
-	//apilo uno distinto y controlo el tope
-	printf("Apilando elemento distinto\n");
-	print_test("apilar valor 3", pila_apilar(p,&b) != false);
-	print_test("tope = 3", pila_ver_tope(p) == &b); 
-	
-	//desapilo todo
-	printf("Desapilando elementos\n");
-	for (i=991; i>0; i--){
-		pila_desapilar(p);
-	}
-	printf("Prueba de conscutivos\n");
-	for ( i=0; i<20; i++){
-		pila_apilar(p, &a);
-		pila_desapilar(p);
-	}
-	
-	//Destruyo la pila
-	pila_destruir(p);	
-	print_test("pila destruida", true);
-	
+	if (cola != NULL){
+		print_test("Cola esta vacia", cola_esta_vacia(cola) == true );
+		
+		//encolo algunos elementos
+		if (cola_encolar(cola,&a)){
+			printf("elemento 1 encolado = True \n");
+			print_test("elemento desencolado = 1 ", cola_desencolar(cola)== &a);	
+		}
+		print_test("elemento desencolado = null ", cola_desencolar(cola)== NULL);
+		//destruyo cola
+		cola_destruir(cola, NULL);
+	}	
+
 }
 
-//Prueba con elementos == NULL
-void prueba_todo_nulo() {
+void prueba_elementos(){
+	printf("~~~ PRUEBA VARIOS ELEMENTOS ~~~\n");
+	printf("En stack \n");
+	//variables
+	int a=1,b=2,c=3;
+	cola_t* cola = cola_crear();
+	
+	if (cola != NULL){
+		print_test("Cola esta vacia", cola_esta_vacia(cola) == true );
+		
+		//encolo algunos elementos
+		if (cola_encolar(cola,&a)){
+			printf("elemento 1 encolado = True \n");
+		}	
+		if (cola_encolar(cola,&b)){
+			printf("elemento 2 encolado = True \n");
+		}
+		if (cola_encolar(cola,&c)){
+			printf("elemento 3 encolado = True \n");
+		}
 
-	printf("\nPRUEBA ELEMENTOS TODOS NULL\n");
-	pila_t* p = pila_crear();
-	int *a=NULL;
-	print_test("apilar NULL", pila_apilar(p,&a) != false);
-	print_test("No esta vacia", pila_esta_vacia(p) == false);
-	print_test("apilar NULL", pila_apilar(p,&a) != false);
-	print_test("Desapilo una vez", pila_desapilar(p) == &a);
-	print_test("No esta vacia", pila_esta_vacia(p) == false);
-	print_test("tope = NULL", pila_ver_tope(p) == &a);
-	print_test("Desapilo dos veces", pila_desapilar(p) == &a);
-	print_test("tope = NULL", pila_ver_tope(p) == NULL);
-	print_test("Esta vacia", pila_esta_vacia(p) == true);
+		print_test("ver primero = 1 ", cola_ver_primero(cola)== &a);
+		print_test("elemento desencolado = 1 ", cola_desencolar(cola)== &a);
+		print_test("ver primero = 2 ", cola_ver_primero(cola)== &b);
+		print_test("elemento desencolado = 2 ", cola_desencolar(cola)== &b);
+		print_test("ver primero = 3 ", cola_ver_primero(cola)== &c);
+		print_test("elemento desencolado = 3 ", cola_desencolar(cola)== &c);
+		print_test("ver primero = NULL ", cola_ver_primero(cola)== NULL);		
 	
-	//Destruyo la pila
-	pila_destruir(p);	
-	print_test("pila destruida", true);
-	
+		//destruyo cola
+		cola_destruir(cola, NULL);
+	}
+
 }
 
-void pruebas_pila_alumno() {
-    pila_t* ejemplo = NULL;
+void prueba_destruccion(){
+	printf("~~~ PRUEBA DE DESTRUCCION ~~~\n");
 	
+	//variables
+	int a=1;
+	cola_t* cola = cola_crear();
+	
+	if (cola != NULL){
+		print_test("Cola esta vacia", cola_esta_vacia(cola) == true );
+		
+		// encolo algunos elementos
+		for(int i=0; i<5; i++){
+			cola_encolar(cola,&a);
+		}
+		//destruyo cola
+		cola_destruir(cola, NULL);
+	}	
+	printf("En heap \n");
+	
+	//variables
+	int* b= malloc(sizeof(int)); 
+	int* c= malloc(sizeof(int)); 
+	int* d= malloc(sizeof(int)); 		
+	cola_t* cola2 = cola_crear();
+	*b=3;
+	*c=4;
+	*d=5;
+	if (cola2 != NULL){
+		print_test("Cola esta vacia", cola_esta_vacia(cola2) == true );
+		
+		//encolo algunos punteros
+		cola_encolar(cola2, b);
+		cola_encolar(cola2, c);
+		cola_encolar(cola2, d);
+	
+		//destruyo cola
+		cola_destruir(cola2, free);
+	}
+}
+
+void prueba_volumen(){
+	printf("~~~ PRUEBA DE VOLUMEN ~~~\n");
+	
+	//variables
+	int a=1;
+	cola_t* cola = cola_crear();
+	
+	if (cola != NULL){
+		print_test("Cola esta vacia", cola_esta_vacia(cola) == true );
+		
+		//encolo algunos elementos
+		printf("Encolando muchos elementos\n");
+		for(int i=0; i<80; i++){
+			cola_encolar(cola,&a);
+		}
+		print_test("Cola NO esta vacia", cola_esta_vacia(cola) == false );
+		//destruyo cola
+		cola_destruir(cola, NULL);
+	}	
+}
+
+void pruebas_cola_alumno() {
+    cola_t* ejemplo = NULL;
     print_test("Puntero inicializado a NULL", ejemplo == NULL);
 		
 	//inicio de pruebas
-	prueba_pila_nulo();
-	prueba_todo_nulo();
-	pruebas_algunos_elementos();
-	pruebas_muchos_elementos();
-
-	
+	prueba_un_elemento();
+	prueba_elementos();
+	prueba_destruccion();
+	prueba_volumen();
 }
 
